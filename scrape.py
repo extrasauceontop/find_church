@@ -33,8 +33,19 @@ def get_urls():
         print(x)
         print("search_lat: " + str(search_lat) + "search_lon: " + str(search_lon))
         url = "https://www.findachurch.co.uk/ajax/Nearby.ashx?CenterLat=" + str(search_lat) + "&CenterLon=" + str(search_lon)
-
-        response = session.get(url).text
+        y = 0
+        while True:
+            y = y+1
+            if y == 10:
+                raise Exception
+            try:
+                response = session.get(url).text
+                break
+            
+            except Exception:
+                session = SgRequests()
+                continue
+        
         soup = bs(response, "html.parser")
 
         locations = soup.find_all("row")
