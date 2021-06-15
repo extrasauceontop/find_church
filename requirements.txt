@@ -1,4 +1,4 @@
 sgrequests==0.1.8
-sgzip==0.5.2
+sgzip==0.5.3
 pandas==1.1.5
 beautifulsoup4==4.9.3
