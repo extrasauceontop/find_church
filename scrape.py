@@ -66,13 +66,13 @@ def get_urls():
         "page_url": page_urls
         })
 
-    return df
+    return df.head(100)
 
 
 
 def get_data(df):
     df = df.drop_duplicates()
-    page_url_list = df["page_url"].to_list()[:100]
+    page_url_list = df["page_url"].to_list()
     x = 0
     session = SgRequests(retry_behavior=False)
     for url in page_url_list:
