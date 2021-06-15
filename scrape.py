@@ -68,6 +68,7 @@ def get_urls():
         "page_url": page_urls
         })
 
+    return df
 
 
 def get_data(df):
