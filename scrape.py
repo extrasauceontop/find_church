@@ -56,8 +56,6 @@ def get_urls():
             longitudes.append(longitude)
             page_urls.append(page_url)
             country_codes.append("UK")
-        if x == 100:
-            break
 
     df = pd.DataFrame({
         "store_number": store_numbers,
@@ -177,7 +175,7 @@ def get_data(df):
         location_types.append(location_type)
         hours_of_operations.append(hours)
 
-        if x == 100:
+        if x == 1000:
             break
 
 df = get_urls()
