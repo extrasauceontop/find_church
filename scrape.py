@@ -179,20 +179,20 @@ data = get_data(df)
 
 df = pd.DataFrame(
     {
-        "locator_domain": locator_domains,
-        "page_url": page_urls,
-        "location_name": location_names,
+        "locator_domain": locator_domains[:len(street_addresses)],
+        "page_url": page_urls[:len(street_addresses)],
+        "location_name": location_names[:len(street_addresses)],
         "street_address": street_addresses,
-        "city": citys,
-        "state": states,
-        "zip": zips,
-        "store_number": store_numbers,
-        "phone": phones,
-        "latitude": latitudes,
-        "longitude": longitudes,
-        "hours_of_operation": hours_of_operations,
-        "country_code": country_codes,
-        "location_type": location_types,
+        "city": citys[:len(street_addresses)],
+        "state": states[:len(street_addresses)],
+        "zip": zips[:len(street_addresses)],
+        "store_number": store_numbers[:len(street_addresses)],
+        "phone": phones[:len(street_addresses)],
+        "latitude": latitudes[:len(street_addresses)],
+        "longitude": longitudes[:len(street_addresses)],
+        "hours_of_operation": hours_of_operations[:len(street_addresses)],
+        "country_code": country_codes[:len(street_addresses)],
+        "location_type": location_types[:len(street_addresses)],
     }
 )
 
