@@ -66,8 +66,6 @@ def get_urls():
         "page_url": page_urls
         })
 
-    return df.head(100)
-
 
 
 def get_data(df):
@@ -75,6 +73,7 @@ def get_data(df):
     page_url_list = df["page_url"].to_list()
     x = 0
     session = SgRequests(retry_behavior=False)
+    print(len(page_url_list))
     for url in page_url_list:
         print(url)
         x = x+1
@@ -147,8 +146,9 @@ def get_data(df):
                 state = address_parts[-3]
         
         phone = soup.find("span", attrs={"class": "contact_phone"}).text.strip().replace(" ", "")
-        if re.search('[a-zA-Z]', phone) is True:
-            phone = "<MISSING>"
+
+        if "e" in phone:
+            phone="<MISSING>"
 
         try:
             location_type = soup.find("div", attrs={"class": "tag"}).text.strip()
@@ -173,6 +173,9 @@ def get_data(df):
         phones.append(phone)
         location_types.append(location_type)
         hours_of_operations.append(hours)
+
+        if x == 100:
+            break
 
 df = get_urls()
 data = get_data(df)
