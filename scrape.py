@@ -89,7 +89,7 @@ def get_data(df):
     for url in page_url_list:
         print(url)
         x = x+1
-
+        y = 0
         while True:
             y = y+1
             if y == 10:
