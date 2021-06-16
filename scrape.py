@@ -95,7 +95,7 @@ def get_data(df):
             if y == 10:
                 raise Exception
             try:
-                response = session.get(url, headers=headers).text
+                response = session.get(url, headers=headers, timeout=5).text
                 break
             
             except Exception:
