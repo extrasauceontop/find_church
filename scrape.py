@@ -1,3 +1,5 @@
+#  The address section for this site is inconsistent, with a ton of locations missing everything except for latitude and longitude.
+
 from sgrequests import SgRequests
 from bs4 import BeautifulSoup as bs
 import re
@@ -7,23 +9,25 @@ from sgzip.dynamic import DynamicGeoSearch, SearchableCountries
 search = DynamicGeoSearch(country_codes=[SearchableCountries.BRITAIN])
 session = SgRequests(retry_behavior=False)
 
+# There are two functions that get data (get_urls, and get_data). 1# means the data point is grabbed in the first function, 2#'s in the second function
 locator_domains = [] #
 page_urls = [] #
 location_names = [] #
-street_addresses = [] #
+street_addresses = [] ##
 citys = [] #
-states = [] #
-zips = [] #
+states = [] ##
+zips = [] ##
 country_codes = [] #
 store_numbers = [] #
-phones = [] #
-location_types = []
+phones = [] ##
+location_types = [] ##
 latitudes = [] #
 longitudes = [] #
-hours_of_operations = []
+hours_of_operations = [] ##
 
-headers = {"user-agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0"}
+headers_list = [{"user-agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0"}, {'User-Agent': 'PostmanRuntime/7.19.0'}]
 
+# Here use SgZip to get a list of all location URLs, and other data points
 def get_urls():
     x = 0
     search = DynamicGeoSearch(country_codes=[SearchableCountries.BRITAIN])
@@ -79,27 +83,34 @@ def get_urls():
 
     return df
 
-
+# Here you iterate through the location URLs to grab the missing data fields for each location
 def get_data(df):
+
+    # Some data cleaning to remove duplicates and get a list of the page urls
     df = df.drop_duplicates()
     page_url_list = df["page_url"].to_list()
     x = 0
     session = SgRequests(retry_behavior=False)
     print(len(page_url_list))
+
+    # Iterate through the URLs
     for url in page_url_list:
         print(url)
         x = x+1
         y = 0
         while True:
             y = y+1
+            headers = headers_list[y%2]
+            print(headers)
             if y == 10:
                 raise Exception
             try:
+
                 response = session.get(url, headers=headers, timeout=5).text
                 break
             
             except Exception:
-                session = SgRequests()
+                session = SgRequests(retry_behavior=False)
                 continue
 
 
@@ -201,7 +212,9 @@ def get_data(df):
         if x == 1000:
             break
 
+
 df = get_urls()
+
 data = get_data(df)
 
 df = pd.DataFrame(
