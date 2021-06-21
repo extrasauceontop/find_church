@@ -102,11 +102,9 @@ def get_data(df):
         try:
 
             response = session.get(url, headers=headers_list[1], timeout=5).text
-            break
         
         except Exception:
             session = SgRequests(retry_behavior=False)
-            continue
 
 
         if "awaiting verification" in response and "The contact data we hold" in response:
@@ -127,7 +125,7 @@ def get_data(df):
         
         except Exception:
             session = SgRequests(retry_behavior=False)
-            response = session.get(url, headers=headers[0]).text
+            response = session.get(url, headers=headers_list[0]).text
             if "awaiting verification" in response and "The contact data we hold" in response:
                 street_addresses.append("<MISSING>")
                 states.append("<MISSING>")
