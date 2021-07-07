@@ -20,6 +20,8 @@ def get_data():
         session = SgRequests(retry_behavior=False)
         for search_lat, search_lon in search:
             x = x + 1
+            if x == 100:
+                break
             url = (
                 "https://www.findachurch.co.uk/ajax/Nearby.ashx?CenterLat="
                 + str(search_lat)
@@ -61,7 +63,11 @@ def get_data():
                 crawl_state.push_request(SerializableRequest(url=page_url))
         crawl_state.set_misc_value("got_urls", True)
 
+    x = 0
     for request_url in crawl_state.request_stack_iter():
+        x = x+1
+        if x == 100:
+            break
         url = request_url.url
         log.info(url)
 
